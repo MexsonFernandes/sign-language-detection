@@ -1,0 +1,7 @@
+{
+  "name": "sign-language-detection",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

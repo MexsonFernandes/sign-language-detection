@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Sign Language Detection App
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+ 
+  <h3>Fetch image from Camera</h3>
+  <ion-button (click)="openCam()" >Open Camera</ion-button>
+  <img src="{{imageBase64}}">
+  
+  <ion-button (click)="checkImage()" *ngIf="image">Check Sign</ion-button>
+
+  <ion-text color="secondary">
+  <h1>{{output}}</h1>
+</ion-text>
+
+</ion-content>
