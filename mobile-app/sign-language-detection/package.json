@@ -1,8 +1,8 @@
 {
-  "name": "sign-language-detection",
+  "name": "sign-language-detector",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "Mexson Fernandes",
+  "homepage": "https://hearthepic.site/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

@@ -12,6 +12,9 @@ from keras import backend as K
 import numpy as np
 from keras.models import Model
 from keras.layers import Dropout, Flatten, Dense
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+
 
 def openCamera(request):
     return render(request, 'camera.html')
@@ -30,31 +33,9 @@ def get_label(argument):
     return(labels.get(argument, "Invalid emotion"))
 
 
+@csrf_exempt
 def detect(request):
-    #     #Using another pre-trained model because of it's better accuracy
-    # img_width, img_height = 150, 150 # Resolution of inputs
-    
-    # # Load INCEPTIONV3
-    # model=applications.InceptionV3(weights=None, include_top=False, 
-    #                                input_shape=(img_width, img_height, 3))
-    # # Freeze first 15 layers
-    # for layer in model.layers[:45]:
-    #     layer.trainable = False
-    # for layer in model.layers[45:]:
-    #    layer.trainable = True
-        
-    # # Attach additional layers
-    # x = model.output
-    # x = Flatten()(x)
-    # x = Dense(1024, activation="relu")(x)
-    # x = Dropout(0.5)(x)
-    # x = Dense(1024, activation="relu")(x)
-    # x = Dropout(0.5)(x)
-    # predictions = Dense(95, activation="softmax")(x) # 4-way softmax classifier at the end
-    
-    # my_model = Model(inputs=model.input, outputs=predictions)
-    # my_model.load_weights("inception_main_test.h5")
-        #Using another pre-trained model because of it's better accuracy
+    #Using another pre-trained model because of it's better accuracy
     img_width, img_height = 150, 150 # Resolution of inputs
     
     # Load INCEPTIONV3
@@ -73,11 +54,14 @@ def detect(request):
     x = Dropout(0.5)(x)
     x = Dense(1024, activation="relu")(x)
     x = Dropout(0.5)(x)
-    predictions = Dense(95, activation="softmax")(x) # 4-way softmax classifier at the end
+    predictions = Dense(100, activation="softmax")(x) # 4-way softmax classifier at the end
     
     my_model = Model(inputs=model.input, outputs=predictions)
-    my_model.load_weights("inception_main_test.h5")
+    my_model.load_weights(settings.MEDIA_ROOT + "/model.h5")
         
+    data = ''
+    res_type = request.POST.get('res', '')
+
     #Getting image
     try:
         data = request.POST['image_data']
@@ -111,8 +95,6 @@ def detect(request):
     #reshaping image (-1 is used to automatically fit an integer at it's place to match dimension of original image)
     gray = test_image.reshape(-1, 150, 150, 3)
 
-    model = load_model("model.h5")
-    res = model.predict(gray)
     res = my_model.predict(gray)
 
     #argmax returns index of max value
@@ -120,7 +102,8 @@ def detect(request):
 
     label = get_label(result_num)
     print(label)
-    K.clear_session()
-
+    if res_type == 'json':
+        print('json')
+        return JsonResponse({"result": True, "label": label})
     return render(request, 'main2.html' , {'label': label} )
     

@@ -16,14 +16,7 @@
     
     <link rel="stylesheet" type="text/css" href="{% static 'camera.css' %}">
 
-<<<<<<< HEAD
-
     <title>Sign Language Detection</title>
-=======
-    <meta name="Description" CONTENT="A music player which detects your mood with the help of an image and play songs accordingly. Check this out now!">
-
-    <title>MoodMusics - Play music based on your mood !</title>
->>>>>>> 598affdaf1f42f8d211c1ae923a1f089066c7633
 </head>
 <body>
 
@@ -46,11 +39,7 @@
           <!--<a href="#" id="download-photo" download="image.jpg" title="Save Photo" class="disabled"><i class="material-icons">file_download</i></a>  -->
           <a href="#" id="proceed" title="Proceed" class="disabled"><i class="material-icons">arrow_forward</i></a>
         </div>
-<<<<<<< HEAD
         <form action="{% url 'output' %}" method="post">
-=======
-        <form action="{% url 'mood-detect-play' %}" method="post">
->>>>>>> 598affdaf1f42f8d211c1ae923a1f089066c7633
             {% csrf_token %}
             <input type="hidden" id="image_d" name="image_data" value="">
         </form>
