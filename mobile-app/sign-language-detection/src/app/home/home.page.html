@@ -9,8 +9,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
- 
+<ion-content text-center padding>
+  <ion-img [src]="home_image"></ion-img>
   <h3>Fetch image from Camera</h3>
   <ion-button (click)="openCam()" >Open Camera</ion-button>
   <img src="{{imageBase64}}">

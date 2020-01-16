@@ -11,6 +11,7 @@ import { LoadingController, ToastController } from '@ionic/angular';
 export class HomePage {
   loading :any;
 
+  home_image = '/assets/home.png';
   constructor(
     private camera: Camera,
     private httpClient: HttpClient,
